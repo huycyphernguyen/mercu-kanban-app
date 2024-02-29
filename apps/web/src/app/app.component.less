@@ -1,0 +1,116 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
+
+.boardContainer {
+    margin: auto;
+}
+
+.table {
+    width: 68%;
+}
+
+.item {
+    border-radius: inherit;
+    font-weight: normal;
+}
+
+._hidden {
+    visibility: hidden;
+}
+
+.tiles {
+    gap: 1rem;
+    grid-auto-rows: minmax(100px, auto);
+    grid-auto-flow: column;
+}
+
+.content {
+    .transition(box-shadow);
+    height: 100%;
+    padding: 0 1rem 1rem 1rem;
+    background: var(--tui-base-01);
+    box-sizing: border-box;
+    overflow: hidden;
+
+    tui-tile._dragged & {
+        box-shadow: var(--tui-shadow-hover);
+    }
+}
+
+.title {
+    margin: 0 0 1rem;
+}
+
+.handle {
+    .transition(opacity);
+    position: absolute;
+    right: 0.75rem;
+    top: 1rem;
+    background: var(--tui-base-01);
+    opacity: 0;
+    cursor: move;
+
+    tui-tiles:not(._dragged) tui-tile:hover &,
+    tui-tile._dragged & {
+        opacity: 0.7;
+    }
+}
+
+.kanban-board {
+    .applied-card {
+        .content {
+            background-color: var(--tui-support-10);
+        }
+
+        .header-title,
+        tui-svg {
+            background-color: var(--tui-support-09);
+        }
+    }
+
+    .interviewing-card {
+        .content {
+            background-color: var(--tui-support-08);
+        }
+
+        .header-title,
+        tui-svg {
+            background-color: var(--tui-support-07);
+        }
+    }
+
+    .offered-card {
+        .content {
+            background-color: var(--tui-support-02);
+        }
+
+        .header-title,
+        tui-svg {
+            background-color: var(--tui-support-01);
+        }
+    }
+
+    .hired-card {
+        .content {
+            background-color: var(--tui-support-12);
+        }
+
+        .header-title,
+        tui-svg {
+            background-color: var(--tui-support-11);
+        }
+    }
+
+    h2.header-title {
+        padding-block-start: 0.83em;
+        margin-block: 0;
+        padding-left: 1.25rem;
+        padding-block-end: 0.83em;
+        color: var(--tui-text-01-night);
+    }
+
+    tui-svg.handle {
+        right: 0.83em;
+        top: 0.83em;
+    }
+}

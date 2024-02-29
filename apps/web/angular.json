@@ -1,0 +1,21 @@
+{
+  "projects": {
+    "web": {
+      "architect": {
+        "build": {
+          "options": {
+            "styles": ["src/styles.less"]
+          },
+          "assets": [
+            "src/assets",
+            {
+              "glob": "**/*",
+              "input": "node_modules/@taiga-ui/icons/src",
+              "output": "assets/taiga-ui/icons"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
