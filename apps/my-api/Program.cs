@@ -10,7 +10,17 @@ var builder = WebApplication.CreateBuilder(args);
     var env = builder.Environment;
 
     services.AddSingleton<DataContext>();
-    services.AddCors();
+    services.AddCors(options =>
+    {
+        options.AddPolicy("AllowAll",
+                        builder =>
+                        {
+                            builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                        });
+    });
     services.AddControllers().AddJsonOptions(x =>
     {
         // serialize enums as strings in api responses (e.g. Role)
@@ -38,6 +48,9 @@ var app = builder.Build();
     var context = scope.ServiceProvider.GetRequiredService<DataContext>();
     await context.Init();
 }
+
+
+app.UseCors("AllowAll");
 
 
 // Configure the HTTP request pipeline.

@@ -21,6 +21,7 @@ import {
   TuiBadgeModule,
   TuiIslandModule,
 } from '@taiga-ui/kit';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,6 +45,7 @@ import {
     TuiBadgeModule,
     TuiDataListModule,
     TuiIslandModule,
+    HttpClientModule,
   ],
   bootstrap: [AppComponent],
 })

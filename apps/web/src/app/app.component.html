@@ -1,77 +1,31 @@
 <tui-root>
     <tui-island class=" kanban-board-wrapper">
-        <!-- <div class="board-header">
-                <tui-items-with-more class="board-row" tuiGroup [collapsed]="true">
-                    <ng-container *ngFor="let item of STAGES; let index = index">
-                        <tui-checkbox-block *tuiItem size="m" class="item" [hideCheckbox]="true"
-                            [ngModel]="value[index]" (ngModelChange)="onModelChange(index)">
-                            {{ item }}
-                        </tui-checkbox-block>
-                    </ng-container>
-                    <ng-template let-lastIndex tuiMore>
-                        <tui-hosted-dropdown tuiDropdownAlign="right" class="item" [content]="dropdown">
-                            <button appearance="whiteblock" size="m" tuiButton type="button" class="item">
-                                More
-                                <tui-badge class="tui-space_left-2" [value]="items.length - lastIndex - 1"></tui-badge>
-                            </button>
-                            <ng-template #dropdown>
-                                <tui-data-list size="l">
-                                    <ng-container *ngFor="let item of items; let index = index">
-                                        <button *ngIf="index > lastIndex" tuiOption (click)="onModelChange(index)">
-                                            {{ item }}
-                                            <tui-svg src="tuiIconCheck" class="tui-space_left-2"
-                                                [class._hidden]="!value[index]"></tui-svg>
-                                        </button>
-                                    </ng-container>
-                                </tui-data-list>
-                            </ng-template>
-                        </tui-hosted-dropdown>
-                    </ng-template>
-                </tui-items-with-more>
-                <div>
-                    <tui-items-with-more class="board-row" tuiGroup [collapsed]="true">
-                        <ng-container *ngFor="let item of items; let index = index">
-                            <tui-checkbox-block *tuiItem size="m" class="item" [hideCheckbox]="true"
-                                [ngModel]="value[index]" (ngModelChange)="onModelChange(index)">
-                                {{ item }}
-                            </tui-checkbox-block>
-                        </ng-container>
-                        <ng-template let-lastIndex tuiMore>
-                            <tui-hosted-dropdown tuiDropdownAlign="right" class="item" [content]="dropdown">
-                                <button appearance="whiteblock" size="m" tuiButton type="button" class="item">
-                                    More
-                                    <tui-badge class="tui-space_left-2"
-                                        [value]="items.length - lastIndex - 1"></tui-badge>
-                                </button>
-                                <ng-template #dropdown>
-                                    <tui-data-list size="l">
-                                        <ng-container *ngFor="let item of items; let index = index">
-                                            <button *ngIf="index > lastIndex" tuiOption (click)="onModelChange(index)">
-                                                {{ item }}
-                                                <tui-svg src="tuiIconCheck" class="tui-space_left-2"
-                                                    [class._hidden]="!value[index]"></tui-svg>
-                                            </button>
-                                        </ng-container>
-                                    </tui-data-list>
-                                </ng-template>
-                            </tui-hosted-dropdown>
-                        </ng-template>
-                    </tui-items-with-more>
-                </div>
-            </div> -->
-
-        <tui-tiles class="tiles kanban-board" [debounce]="500" [(order)]="order">
-            <tui-tile *ngFor="let item of items; let index = index" class="tile {{ item.classes }}" [height]="item.h"
-                [style.order]="order.get(index)" [width]="item.w">
+        <tui-tiles class="tiles kanban-board" [debounce]="300" [(order)]="order">
+            <tui-tile *ngFor="let item of items.headerItems; let index = index" class="tile {{ item.classes }}"
+                [height]="item.h" [style.order]="order.get(index)" [width]="item.w">
                 <div class="overlay">
                     <h2 class="header-title">{{ item.content }}</h2>
-                    <tui-svg src="tuiIconDragLarge" tuiTileHandle class="handle"></tui-svg>
-                    <tui-svg src="tuiIconDragLarge" tuiTileHandle class="handle"></tui-svg>
                 </div>
                 <div class="content">
                     <!-- Order - {{ order.get(index) ?? index }} -->
                 </div>
             </tui-tile>
         </tui-tiles>
+        <div class="candidate-panel">
+            <tui-tiles *ngFor="let candidateItem of items.candidateItems" [debounce]="0" class="tiles"
+                [(order)]="candidateItem.order">
+                <tui-tile *ngFor="let s of STAGES; let index = index"
+                    [ngClass]="{'tile': true, 'current-stage': candidateItem.candidate.stage === s}" [height]="1"
+                    [width]="1" [style.order]="candidateItem.order.get(index)" (click)="onMouseUp(index)">
+                    <div class="content">
+                        <div class="current-stage" *ngIf="candidateItem.candidate.stage === s">
+                            {{ candidateItem.candidate.firstName }} {{ candidateItem.candidate.lastName }}
+                            <tui-svg src="tuiIconDragLarge" tuiTileHandle class="handle"></tui-svg>
+                            <tui-svg src="tuiIconDragLarge" tuiTileHandle class="handle"></tui-svg>
+                        </div>
+                    </div>
+                </tui-tile>
+            </tui-tiles>
+        </div>
     </tui-island>
 </tui-root>

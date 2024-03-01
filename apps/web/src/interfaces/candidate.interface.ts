@@ -3,7 +3,7 @@ export interface Candidate {
   lastName: string;
   email: string;
   phoneNumber: string;
-  stage: Stages;
+  stage?: Stages;
 }
 
 export enum Stages {
