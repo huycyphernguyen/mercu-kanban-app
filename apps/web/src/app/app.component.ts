@@ -1,6 +1,13 @@
-import { Component, ChangeDetectionStrategy, Injectable } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Injectable,
+  Inject,
+} from '@angular/core';
 import { Candidate, Stages } from '../interfaces/candidate.interface';
 import { HttpClient } from '@angular/common/http';
+import { FormControl, FormGroup } from '@angular/forms';
+import { TuiDialogService } from '@taiga-ui/core';
 
 @Component({
   selector: 'kanban-app-root',
@@ -26,7 +33,21 @@ export class AppComponent {
     'Access-Control-Allow-Headers': 'X-Requested-With,content-type',
   };
 
-  constructor(private http: HttpClient) {}
+  exampleForm = new FormGroup({
+    nameValue: new FormControl(''),
+  });
+
+  open = false;
+
+  showDialog(): void {
+    this.open = true;
+  }
+
+  constructor(
+    private http: HttpClient,
+    @Inject(TuiDialogService)
+    private readonly dialogs: TuiDialogService
+  ) {}
 
   ngOnInit() {
     this.http
@@ -95,10 +116,31 @@ export class AppComponent {
   }
 
   updateStageForCandidate(index: number) {
+    const { candidate, order } = this.items.candidateItems[index];
+
     this.http
-      .get(`${this.baseUrl}/Users`, {
-        headers: this.headers,
-      })
+      .put(
+        `${this.baseUrl}/Users/${this.items.candidateItems[index].candidate.id}`,
+        {
+          ...candidate,
+          stage:
+            this.STAGES[
+              order.get(this.STAGES.findIndex((s) => s === candidate.stage))
+            ],
+        },
+        {
+          headers: this.headers,
+        }
+      )
       .subscribe((val) => console.log(val));
+  }
+
+  onAddCandidateClick(index: number) {
+    this.open = true;
+    this.dialogs.subscribe({
+      complete: () => {
+        console.log(index);
+      },
+    });
   }
 }

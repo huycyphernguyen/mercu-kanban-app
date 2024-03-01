@@ -7,7 +7,11 @@
 
 ## Start the app
 
-To start the development server run `nx serve web`. Open your browser and navigate to http://localhost:4200/. Happy coding!
+Start the Backend API `nx serve my-api`.
+
+To start the Wep Appplication `nx serve web`. Open your browser and navigate to http://localhost:4200/. Happy coding!
+
+
 
 
 ## Generate code

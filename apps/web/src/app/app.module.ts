@@ -12,6 +12,8 @@ import {
   TuiGroupModule,
   TuiHostedDropdownModule,
   TuiDataListModule,
+  TuiButtonModule,
+  TuiDialogModule,
 } from '@taiga-ui/core';
 import { TuiTableModule, TuiReorderModule } from '@taiga-ui/addon-table';
 import {
@@ -46,6 +48,8 @@ import { HttpClientModule } from '@angular/common/http';
     TuiDataListModule,
     TuiIslandModule,
     HttpClientModule,
+    TuiButtonModule,
+    TuiDialogModule,
   ],
   bootstrap: [AppComponent],
 })

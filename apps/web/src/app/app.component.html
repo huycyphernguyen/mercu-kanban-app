@@ -1,10 +1,30 @@
+<ng-template let-observer [tuiDialogOptions]="{label: 'Declarative directive', size: 's'}" [(tuiDialog)]="open">
+    <form [formGroup]="exampleForm" (ngSubmit)="observer.complete()">
+        <p>Add a new Candidate</p>
+        <tui-input formControlName="nameValue" tuiAutoFocus>
+            First Name
+            <input inputmode="string" tuiTextfield />
+        </tui-input>
+        <p>
+            <button tuiButton type="submit">
+                Ok
+            </button>
+        </p>
+    </form>
+</ng-template>
+
 <tui-root>
     <tui-island class=" kanban-board-wrapper">
         <tui-tiles class="tiles kanban-board" [debounce]="300" [(order)]="order">
             <tui-tile *ngFor="let item of items.headerItems; let index = index" class="tile {{ item.classes }}"
                 [height]="item.h" [style.order]="order.get(index)" [width]="item.w">
                 <div class="overlay">
-                    <h2 class="header-title">{{ item.content }}</h2>
+                    <div class="header-wrapper">
+                        <h2 class="header-title">{{ item.content }} <button class="add-button" type="button"
+                                (click)="onAddCandidateClick(index)"> Add
+                            </button>
+                        </h2>
+                    </div>
                 </div>
                 <div class="content">
                     <!-- Order - {{ order.get(index) ?? index }} -->
